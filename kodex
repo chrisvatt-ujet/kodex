@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'USAGE'
+Usage: kodex <profile> [codex args...]
+
+Runs codex with CODEX_HOME set to a profile-specific directory.
+
+Environment:
+  KODEX_PROFILES_DIR  Profile root directory. Default: ~/.kodex/profiles
+  KODEX_CODEX_BIN     Codex binary to run. Default: codex
+
+Examples:
+  kodex alice
+  kodex bob exec "summarize this repo"
+  KODEX_PROFILES_DIR=/Users/Shared/codex-profiles kodex alice
+USAGE
+}
+
+die() {
+  printf 'kodex: %s\n' "$*" >&2
+  exit 1
+}
+
+confirm() {
+  local prompt=$1
+  local answer
+
+  if [[ ! -t 0 ]]; then
+    return 1
+  fi
+
+  read -r -p "$prompt [y/N] " answer
+  case "$answer" in
+    y|Y|yes|YES|Yes) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+if [[ $# -lt 1 || "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 2
+fi
+
+profile=$1
+shift
+
+if [[ ! "$profile" =~ ^[A-Za-z0-9._-]+$ ]]; then
+  die "invalid profile '$profile'; use only letters, numbers, dot, underscore, or hyphen"
+fi
+
+profiles_dir=${KODEX_PROFILES_DIR:-"$HOME/.kodex/profiles"}
+codex_bin=${KODEX_CODEX_BIN:-codex}
+profile_home="$profiles_dir/$profile"
+
+if [[ ! -d "$profile_home" ]]; then
+  printf "kodex: profile '%s' does not exist at %s\n" "$profile" "$profile_home" >&2
+  if confirm "Create it now?"; then
+    mkdir -p "$profile_home"
+    chmod 700 "$profile_home"
+    printf "kodex: created profile '%s'\n" "$profile" >&2
+  else
+    die "profile not created"
+  fi
+fi
+
+if ! command -v "$codex_bin" >/dev/null 2>&1; then
+  die "could not find codex binary '$codex_bin'; set KODEX_CODEX_BIN=/path/to/codex"
+fi
+
+export CODEX_HOME="$profile_home"
+exec "$codex_bin" "$@"
