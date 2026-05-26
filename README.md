@@ -11,12 +11,15 @@ a running Codex process.
 
 ```sh
 kodex <profile> [codex args...]
+kodex <profile> usage [--json]
 ```
 
 Examples:
 
 ```sh
 kodex alice
+kodex alice usage
+kodex alice usage --json
 kodex bob exec "summarize this repo"
 KODEX_PROFILES_DIR=/Users/Shared/codex-profiles kodex alice
 ```
@@ -28,6 +31,25 @@ By default, profiles live under:
 ```
 
 The wrapper prompts before creating a missing profile.
+
+## Usage Checks
+
+`kodex <profile> usage` asks Codex's app-server account API for the selected
+profile's ChatGPT Codex rate-limit usage.
+
+This requires the profile to be logged in with ChatGPT auth:
+
+```sh
+kodex alice login
+kodex alice usage
+```
+
+Use `--json` when another script should consume the raw account and rate-limit
+payload:
+
+```sh
+kodex alice usage --json
+```
 
 ## Install
 
