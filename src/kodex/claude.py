@@ -41,7 +41,7 @@ USAGE_TEXT = """Usage: {program} profile <profile> [claude args...]
        {program} --version
 
 Runs Claude Code with a private CLAUDE_CONFIG_DIR for the selected profile.
-clod, klod, and klodex are equivalent; kodex continues to run Codex.
+clod, klod, klodex, and claus are equivalent; kodex continues to run Codex.
 
 Environment:
   KODEX_CLAUDE_PROFILES_DIR  Profile root. Default: ~/.kodex/claude/profiles
@@ -125,7 +125,7 @@ def run(argv: Sequence[str], env: Mapping[str, str], program: str = "clod") -> i
 
 def main(argv: Sequence[str] | None = None) -> int:
     invoked_name = Path(sys.argv[0]).name
-    program = invoked_name if invoked_name in {"clod", "klod", "klodex"} else "clod"
+    program = invoked_name if invoked_name in {"clod", "klod", "klodex", "claus"} else "clod"
     try:
         return run(tuple(sys.argv[1:] if argv is None else argv), os.environ, program)
     except KodexError as error:

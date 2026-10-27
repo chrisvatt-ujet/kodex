@@ -3,7 +3,7 @@
 Small wrappers for running Codex and Claude Code with separate account profiles:
 
 - `kodex` runs Codex with a profile-specific `CODEX_HOME`.
-- `clod`, `klod`, and `klodex` are equivalent names for the Claude Code wrapper.
+- `clod`, `klod`, `klodex`, and `claus` are equivalent names for the Claude Code wrapper.
 
 `kodex` is a typed Python 3.14+ uv project.
 
@@ -90,13 +90,14 @@ sign-in. Use `auth status` to check which account is signed in.
 Use the `--claudeai` subscription login shown above: Claude Console sign-ins
 without an API key do not support config-directory account isolation.
 
-All three command names use the same profiles and pass Claude arguments through
+All four command names use the same profiles and pass Claude arguments through
 unchanged, including model, effort, and noninteractive output options:
 
 ```sh
 clod profile <profile> [claude args...]
 klod profile <profile> [claude args...]
 klodex profile <profile> [claude args...]
+claus profile <profile> [claude args...]
 
 clod profile alice --model sonnet --effort high
 klodex profile bob --model opus --effort medium -p "summarize this repo"
@@ -135,8 +136,8 @@ settings still apply, including settings that configure alternate authentication
 Profile separation is a convenience for account switching, not a security
 boundary between people sharing an operating-system account.
 
-`clod`, `klod`, and `klodex` support explicit profile selection; they do not implement
-Codex's quota-based `auto` or `usage` commands. Existing `kodex` commands keep
+`clod`, `klod`, `klodex`, and `claus` support explicit profile selection; they do
+not implement Codex's quota-based `auto` or `usage` commands. Existing `kodex` commands keep
 their behavior. See Claude's [settings](https://code.claude.com/docs/en/settings)
 and [authentication](https://code.claude.com/docs/en/authentication) documentation
 for native configuration and login details.
@@ -205,8 +206,9 @@ Install from the checkout:
 ```
 
 The installer checks that `uv` and Python 3.14 are already installed, installs
-the `kodex`, `clod`, `klod`, and `klodex` commands as a uv tool, and updates your shell
-PATH for uv tools. It does not install uv, Python, Codex, or Claude Code for you.
+the `kodex`, `clod`, `klod`, `klodex`, and `claus` commands as a uv tool, and updates
+your shell PATH for uv tools. It does not install uv, Python, Codex, or Claude Code
+for you.
 
 If a prerequisite is missing, install it first. For example:
 
@@ -234,6 +236,7 @@ uv run kodex profile alice
 uv run clod profile alice
 uv run klod profile alice
 uv run klodex profile bob
+uv run claus profile bob
 ```
 
 The top-level `./kodex` entrypoint also works when Python 3.14 is available.

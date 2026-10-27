@@ -245,10 +245,11 @@ class ClaudeProfileTests(unittest.TestCase):
         self.assertEqual(scripts["clod"], "kodex.claude:main")
         self.assertEqual(scripts["klod"], scripts["clod"])
         self.assertEqual(scripts["klodex"], scripts["clod"])
+        self.assertEqual(scripts["claus"], scripts["clod"])
         self.assertEqual(scripts["kodex"], "kodex.cli:main")
 
     def test_help_names_requested_alias_without_touching_accounts(self) -> None:
-        for alias in ("clod", "klod", "klodex"):
+        for alias in ("clod", "klod", "klodex", "claus"):
             with self.subTest(alias=alias):
                 output = io.StringIO()
                 with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):

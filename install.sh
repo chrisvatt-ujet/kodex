@@ -5,7 +5,8 @@ usage() {
   cat >&2 <<'USAGE'
 Usage: ./install.sh [--no-shell]
 
-Installs kodex as a uv tool and makes `kodex`, `clod`, `klod`, and `klodex` available on PATH.
+Installs kodex as a uv tool and makes `kodex`, `clod`, `klod`, `klodex`, and `claus`
+available on PATH.
 
 Prerequisites:
   uv
@@ -88,6 +89,6 @@ if [ "$install_shell" -eq 1 ]; then
   fi
 fi
 
-printf '\nInstalled kodex (Codex), clod, klod, and klodex (Claude Code).\n' >&2
+printf '\nInstalled kodex (Codex), clod, klod, klodex, and claus (Claude Code).\n' >&2
 printf 'Open a new shell, or run: . "$HOME/.local/bin/env"\n' >&2
 printf 'Then try: kodex --help or clod --help\n' >&2
