@@ -244,7 +244,7 @@ def settings_for_profile(
 
 
 def validate_profile_name(profile: str) -> None:
-    if not PROFILE_RE.fullmatch(profile):
+    if profile in {".", ".."} or not PROFILE_RE.fullmatch(profile):
         fail(f"invalid profile '{profile}'; use only letters, numbers, dot, underscore, or hyphen")
 
 
