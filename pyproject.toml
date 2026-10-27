@@ -15,6 +15,7 @@ dev = [
 [project.scripts]
 kodex = "kodex.cli:main"
 clod = "kodex.claude:main"
+klod = "kodex.claude:main"
 klodex = "kodex.claude:main"
 
 [build-system]

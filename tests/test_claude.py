@@ -238,16 +238,17 @@ class ClaudeProfileTests(unittest.TestCase):
             claude.run(["profile", "alice"], env)
         self.assertFalse(self.profiles.exists())
 
-    def test_both_aliases_are_installed_to_same_entrypoint(self) -> None:
+    def test_all_aliases_are_installed_to_same_entrypoint(self) -> None:
         project = Path(__file__).resolve().parents[1]
         metadata = tomllib.loads((project / "pyproject.toml").read_text())
         scripts = metadata["project"]["scripts"]
         self.assertEqual(scripts["clod"], "kodex.claude:main")
+        self.assertEqual(scripts["klod"], scripts["clod"])
         self.assertEqual(scripts["klodex"], scripts["clod"])
         self.assertEqual(scripts["kodex"], "kodex.cli:main")
 
     def test_help_names_requested_alias_without_touching_accounts(self) -> None:
-        for alias in ("clod", "klodex"):
+        for alias in ("clod", "klod", "klodex"):
             with self.subTest(alias=alias):
                 output = io.StringIO()
                 with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
